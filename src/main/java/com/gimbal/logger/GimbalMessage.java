@@ -8,7 +8,6 @@ public enum GimbalMessage {
     SYSTEM_INITIALIZED("Gimbal system initialized and ready"),
     SYSTEM_RUNNING("Gimbal is running"),
 
-
     // Command validation messages
     ERROR_INVALID_COMMAND("Invalid command syntax. Please check your input"),
     MISSING_COMMAND("Incomplete command detected. Tool name or additional arguments required"),
@@ -20,13 +19,22 @@ public enum GimbalMessage {
     CONFLICTING_FLAGS("Conflicting flags detected in command"),
     INCOMPLETE_COMMAND_FOUND("No task or tools provided. Command is incomplete."),
     INVALID_FLAG("One or more flags are invalid or malformed."),
+    UNSUPPORTED_VERSION("The specified version is not supported for this tool"),
+    INVALID_VERSION_FORMAT("Invalid version format. Use semantic versioning (e.g., 1.0.0) or keywords like 'latest'"),
+    INVALID_VENDOR("Invalid vendor specified for this tool"),
+    INVALID_PATH("Invalid file system path provided"),
+    INVALID_ENV("Invalid environment name. Use alphanumeric characters, hyphens, or underscores"),
+    INVALID_PROFILE("Invalid profile name. Use alphanumeric characters, hyphens, underscores, or dots"),
+    INVALID_LOG_FILE("Invalid log file path. Must end with .log, .txt, or .out"),
+    INVALID_CONFIG("Invalid config value. Provide a config name or path to a config file"),
 
     // Help and version messages
     PROVIDE_HELP("Displaying help information"),
     PROVIDE_VERSION("Displaying Gimbal version information"),
 
     // Global flag messages
-    GLOBAL_FLAG_IN_BETWEEN("Warning: Global flags should be placed at the beginning of the command. Flags placed between tools will be ignored"),
+    GLOBAL_FLAG_IN_BETWEEN(
+            "Warning: Global flags should be placed at the beginning of the command. Flags placed between tools will be ignored"),
     GLOBAL_FLAG_PROCESSED("Global flag processed successfully"),
 
     // Installation messages
@@ -60,8 +68,10 @@ public enum GimbalMessage {
     CHECKSUM_MISMATCH("Checksum verification failed. Downloaded file may be corrupted"),
 
     // Extraction messages
+    EXTRACTION_STARTED("Extracting files"),
     EXTRACT_STARTED("Extracting files"),
     EXTRACT_IN_PROGRESS("Extraction in progress..."),
+    EXTRACTION_COMPLETED("Extraction completed successfully"),
     EXTRACT_COMPLETED("Extraction completed successfully"),
     EXTRACT_FAILED("Extraction failed. Archive may be corrupted"),
 

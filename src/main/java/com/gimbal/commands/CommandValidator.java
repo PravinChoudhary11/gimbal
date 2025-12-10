@@ -34,7 +34,7 @@ public class CommandValidator {
 
             if (isTask(token)) continue;
 
-            if(!isTask(token) && !isTool(token)){
+            if(!isTask(token) && !isTool(token) && !(token.startsWith("-"))){
                 if(!isTask(token)){
                     SystemLogger.LogAndExitWithDisplayError(
                         GimbalMessage.UNKNOWN_TASK.getMessage(),
@@ -65,45 +65,8 @@ public class CommandValidator {
 
     private static boolean isTool(String tool) {
         if (tool == null || tool.isEmpty()) return false;
+        return SupportedTool.isSupported(tool);
 
-        switch (tool.toLowerCase()) {
-            case "java":
-            case "jdk":
-            case "jre":
-
-            case "maven":
-            case "mvn":
-
-            case "git":
-
-            case "node":
-            case "npm":
-            case "npx":
-            case "pnpm":
-            case "yarn":
-
-            case "python":
-            case "py":
-
-            case "docker":
-            case "compose":
-            case "docker-compose":
-
-            case "gradle":
-
-            case "go":
-
-            case "rust":
-            case "cargo":
-
-            case "kotlin":
-            case "kotlinc":
-
-                return true;
-
-            default:
-                return false;
-        }
     }
 
      private static boolean isBooleanflag(String flag) {

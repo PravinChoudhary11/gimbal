@@ -1,6 +1,9 @@
 package com.gimbal.logger;
 
 import com.gimbal.GimbalCLI;
+import com.gimbal.commands.ToolVersionValidator;
+import com.gimbal.commands.GlobalflagsRunner.GlobalflagsConfig;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -10,7 +13,6 @@ public class SystemLogger {
     private static final boolean ENABLE_COLOR = !System.getProperty("os.name").toLowerCase().contains("win") ||
             System.getenv("WT_SESSION") != null ||
             System.getenv("TERM_PROGRAM") != null;
-    private static boolean verboseMode = false;
     
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
 
@@ -40,20 +42,34 @@ public class SystemLogger {
 
         if(message == GimbalMessage.INVALID_FLAG.getMessage()){
             System.out.println("[ "+SYSTEM_NAME+" ]"+" [ "+type+" ] "+message+" : INVALID_FLAG = "+argu);
+            printFormattedLog(message, type, exitcode, ENABLE_COLOR);
             printSupportedFlags();
         }
         if(exitcode == ExitCodes.UNKNOWN_TOOL.getcode()){
             System.out.println("[ "+SYSTEM_NAME+" ]"+" [ "+type+" ] "+message+" : UNKNOWN_TOOL = "+argu);
+            printFormattedLog(message, type, exitcode, ENABLE_COLOR);
             printSupportedTools();
         }
         if(exitcode == ExitCodes.UNKNOWN_TASK.getcode()){
             System.out.println("[ "+SYSTEM_NAME+" ]"+" [ "+type+" ] "+message+" : UNKNOWN_TASK = "+argu);
+            printFormattedLog(message, type, exitcode, ENABLE_COLOR);
             printSupportedTask();
             
         }
         if(exitcode == ExitCodes.MISSING_FLAG_VALUE.getcode()){
-            System.out.println("[ "+SYSTEM_NAME+" ]"+" [ "+type+" ] "+message+" : FLAG_VALUE_MISSING ="+argu);
+            System.out.println("[ "+SYSTEM_NAME+" ]"+" [ "+type+" ] "+message+" : FLAG_VALUE_MISSING =  "+argu);
+            printFormattedLog(message, type, exitcode, ENABLE_COLOR);
             printValueFlagSyntax();
+        }
+        if(exitcode == ExitCodes.INVALID_FLAG_VALUE.getcode()){
+            System.out.println("[ "+SYSTEM_NAME+" ]"+" [ "+type+" ] "+message+" :");
+            System.out.println(" INVALID_FLAG_VALUE_FOUND =   ----->  "+argu.substring(0,argu.indexOf(":")) + "  <--------");
+            String toolname = argu.substring(argu.indexOf(":")+1);
+            System.out.println(ToolVersionValidator.getSupportedVersionsMessage(toolname));
+            System.out.println("                                                        ");
+            System.out.println("                                                        ");
+            System.out.println("                                                        ");
+            printFormattedLog(message, type, exitcode, ENABLE_COLOR);
         }
         System.exit(exitcode);
 
@@ -95,7 +111,7 @@ public class SystemLogger {
         StringBuilder logBuilder = new StringBuilder();
 
         // Add timestamp if verbose mode
-        if (verboseMode) {
+        if (GlobalflagsConfig.Isvarbose()) {
             String timestamp = LocalDateTime.now().format(TIME_FORMATTER);
             logBuilder.append(colorize(GRAY, "[" + timestamp + "] "));
         }
@@ -113,7 +129,7 @@ public class SystemLogger {
         logBuilder.append(colorize(getMessageColor(type), message));
 
         // Add exit code details if verbose or terminating
-        if (verboseMode || isTerminating) {
+        if (GlobalflagsConfig.Isvarbose() || isTerminating) {
             String exitCodeInfo = formatExitCode(exitcode);
             logBuilder.append(" ");
             logBuilder.append(colorize(GRAY, exitCodeInfo));
