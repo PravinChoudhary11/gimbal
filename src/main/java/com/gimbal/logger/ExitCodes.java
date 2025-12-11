@@ -8,6 +8,7 @@ public enum ExitCodes {
     INFO_VERSION(99),
     INFO_HELP(98),
     CONTINUE(100),
+    IS_NOT_ADMIN(101),
 
     // Usage and command errors (2-9)
     GENERAL_ERROR(1),

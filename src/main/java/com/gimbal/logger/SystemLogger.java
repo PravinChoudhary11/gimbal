@@ -99,6 +99,10 @@ public class SystemLogger {
         if (isErrorCode(exitcode)) {
             printTroubleshootingHint(exitcode);
         }
+        if(exitcode == ExitCodes.IS_NOT_ADMIN.getcode()){
+            printAdminPrivilegesRequired();
+        }
+
 
         System.exit(exitcode);
     }
@@ -236,6 +240,36 @@ public class SystemLogger {
                 code != ExitCodes.INFO_VERSION.getcode() &&
                 code != ExitCodes.INFO_HELP.getcode();
     }
+
+    private static void printAdminPrivilegesRequired() {
+        System.out.println();
+        System.out.println(colorize(BOLD, "Administrator Privileges Required:"));
+        System.out.println("  This operation requires elevated system permissions to modify");
+        System.out.println("  global configuration settings and system environment variables.");
+        System.out.println();
+
+        System.out.println(colorize(BOLD, "Why This Is Needed:"));
+        System.out.println("  • System-level changes cannot be applied without administrator access.");
+        System.out.println("  • Certain environment variables and registry values can only be updated");
+        System.out.println("    when running with elevated privileges.");
+        System.out.println();
+
+        System.out.println(colorize(BOLD, "How to Run Your Terminal as Administrator:"));
+        System.out.println("  • Close your current terminal or VS Code session.");
+        System.out.println("  • Right-click your terminal or VS Code icon.");
+        System.out.println("  • Choose " + colorize(CYAN, "\"Run as administrator\"") + ".");
+        System.out.println();
+
+        System.out.println(colorize(BOLD, "Examples:"));
+        System.out.println("  " + colorize(GREEN, "Windows Terminal / PowerShell →"));
+        System.out.println("    Right-click the app icon → Run as administrator");
+        System.out.println();
+
+        System.out.println(colorize(BOLD, "After Restarting With Administrator Rights:"));
+        System.out.println("  Re-run the command you attempted earlier.");
+        System.out.println();
+    }
+
 
     private static void printValueFlagSyntax() {
         System.out.println("\n=== Value Flag Syntax ===");
@@ -432,7 +466,7 @@ public class SystemLogger {
                 + colorize(GREEN + BOLD, GimbalCLI.SYSTEM_VERSION));
         System.out.println("     " + colorize(GRAY, "Development Tool Manager"));
         System.out.println();
-        System.out.println("     Repository: " + colorize(CYAN, "github.com/PravinChoudhary11/gimbal"));
+        System.out.println("     Repository: " + colorize(CYAN, "https://github.com/PravinChoudhary11/gimbal"));
         System.out.println("     License:    " + colorize(GRAY, "MIT"));
         System.out.println();
     }

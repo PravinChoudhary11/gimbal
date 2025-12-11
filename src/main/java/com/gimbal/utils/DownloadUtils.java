@@ -63,7 +63,7 @@ public class DownloadUtils {
                 SystemLogger.SystemLoggerDisplay(
                         GimbalMessage.DOWNLOAD_COMPLETED.getMessage() + " - " + saveFilePath,
                         GimbalMessageType.SUCCESS.getMessage(),
-                        ExitCodes.SUCCESS.getcode());
+                        ExitCodes.CONTINUE.getcode());
 
                 connection.disconnect();
                 return true;
