@@ -46,7 +46,7 @@ public final class ENVSetter {
                 SystemLogger.SystemLoggerDisplay(
                         "Successfully set environment variable: " + variableName,
                         GimbalMessageType.SUCCESS.getMessage(),
-                        ExitCodes.SUCCESS.getcode());
+                        ExitCodes.CONTINUE.getcode());
                 return true;
             } else {
                 SystemLogger.LogAndExit(
@@ -164,7 +164,7 @@ public final class ENVSetter {
                 SystemLogger.SystemLoggerDisplay(
                         "Successfully added to system PATH: " + newPathEntry,
                         GimbalMessageType.SUCCESS.getMessage(),
-                        ExitCodes.SUCCESS.getcode());
+                        ExitCodes.CONTINUE.getcode());
                 return true;
             } else {
                 SystemLogger.LogAndExit(
@@ -202,7 +202,7 @@ public final class ENVSetter {
             SystemLogger.SystemLoggerDisplay(
                     "Environment changes broadcasted to system",
                     GimbalMessageType.DEBUG.getMessage(),
-                    ExitCodes.SUCCESS.getcode());
+                    ExitCodes.CONTINUE.getcode());
 
         } catch (Exception e) {
             SystemLogger.SystemLoggerDisplay(
